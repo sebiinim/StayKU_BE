@@ -59,7 +59,6 @@ def login():
     else:
         return jsonify({"status": "fail", "message": "아이디 또는 비밀번호가 일치하지 않습니다"}), 401
 
-
 # ------------------ 1. 세탁기 현황 보기 ------------------
 @app.route('/washer_status', methods=['GET'])
 def washer_status():
@@ -157,6 +156,32 @@ def get_chat(from_user, to_user):
     messages = cur.fetchall()
     cur.close()
     return jsonify(messages)
+
+# ------------------- 채팅 상대 불러오기 -------------------
+@app.route('/chat/partners/<user_id>', methods=['GET'])
+def get_chat_partners(user_id):
+    try:
+        cursor = mysql.connection.cursor()
+        
+        # from_user 또는 to_user에 user_id가 포함된 경우, 상대방 ID만 추출
+        query = """
+            SELECT DISTINCT 
+                CASE 
+                    WHEN from_user = %s THEN to_user 
+                    ELSE from_user 
+                END AS partner
+            FROM roommate_chats
+            WHERE from_user = %s OR to_user = %s
+        """
+        cursor.execute(query, (user_id, user_id, user_id))
+        result = cursor.fetchall()
+        cursor.close()
+        
+        partners = [row[0] for row in result]
+        return jsonify(partners), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 # ------------------ 2-3. 룸메이트 팀 구성 ------------------
 @app.route('/team', methods=['POST'])
