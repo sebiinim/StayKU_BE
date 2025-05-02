@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS roommate_profiles (
     user_id VARCHAR(100),
     is_morning_person BOOLEAN,
     is_smoker BOOLEAN,
-    snores BOOLEAN,
+    snore_level INT,
     hygiene_level INT,
     hall_type ENUM('신관', '구관'),
     PRIMARY KEY(user_id),
