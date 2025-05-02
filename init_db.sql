@@ -67,3 +67,11 @@ CREATE TABLE IF NOT EXISTS roommate_team_members (
     PRIMARY KEY(team_id, user_id),
     FOREIGN KEY(team_id) REFERENCES roommate_teams(team_id) ON DELETE CASCADE
 );
+
+-- 8. 태그
+CREATE TABLE IF NOT EXISTS user_tags (
+    user_id VARCHAR(100),
+    tag VARCHAR(100),
+    PRIMARY KEY(user_id, tag),
+    FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);

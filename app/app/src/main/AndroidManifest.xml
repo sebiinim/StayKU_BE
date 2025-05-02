@@ -38,6 +38,12 @@
             </intent-filter>
         </activity>
 
+        <!-- 태그 추가 등록 -->
+        <activity android:name=".TagSelectActivity" />
+
+        <!-- 룸메 매칭 -->
+        <activity android:name=".TagMatchResultActivity" />
+
     </application>
 
 </manifest>

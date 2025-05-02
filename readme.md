@@ -1,3 +1,16 @@
+## 현재 회원가입한 아이디 데이터 베이스
++----------+-------------+
+| user_id  | password    |
++----------+-------------+
+| 1        | 1           |
+| 2        | 2           |
+| 3        | 3           |
+| 4        | 4           |
+| sugi2845 | tjduswl123! |
++----------+-------------+
+- 이 아이디와 패스워드로 로그인 하면 됨
+- 새로 회원가입해도 상관없음
+
 # Laundry & Roommate Management App
 
 Flask + MySQL + OpenAI API + Android Studio 초기 프로젝트
@@ -118,3 +131,13 @@ python app.py
 ## 등록한 아이디가 보낸 메시지 보는 법
 1. SELECT * FROM roommate_chats WHERE from_user = 'sugi2845';
 2. SELECT * FROM roommate_chats;
+
+## 전체 사용자 태그 목록 확인:
+1. 전체 사용자 태그 목록 확인
+```
+SELECT * FROM user_tags;
+```
+2. 특정 태그 가진 사용자 모두 보기
+```
+SELECT user_id FROM user_tags WHERE tag = '#비흡연';
+```

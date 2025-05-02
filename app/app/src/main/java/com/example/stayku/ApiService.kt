@@ -8,7 +8,7 @@ data class ProfileRequest(
     val user_id: String,
     val is_morning_person: Boolean,
     val is_smoker: Boolean,
-    val snores: Boolean,
+    val snore_level: Int,
     val hygiene_level: Int,
     val hall_type: String
 )
@@ -24,6 +24,12 @@ data class ChatRequest(
 data class TeamRequest(
     val members: List<String>, // 팀 멤버 리스트
     val hall_type: String // 신관 or 구관
+)
+
+// 태그 저장 요청 모델
+data class TagRequest(
+    val user_id: String,
+    val tags: List<String>
 )
 
 // 서버와 통신하는 API 인터페이스 정의
@@ -54,4 +60,17 @@ interface ApiService {
     // 팀 생성 API (POST /team)
     @POST("/team")
     fun createTeam(@Body request: TeamRequest): Call<Map<String, Any>>
+
+    // 태그 저장
+    @POST("/tags")
+    fun saveUserTags(@Body request: TagRequest): Call<Map<String, Any>>
+
+    // 태그 조회
+    @GET("/tags/{user_id}")
+    fun getUserTags(@Path("user_id") userId: String): Call<List<String>>
+
+    // 매칭 사용자 추천
+    @GET("/match/{user_id}")
+    fun getMatchedUsers(@Path("user_id") userId: String): Call<List<Map<String, Any>>>
+
 }

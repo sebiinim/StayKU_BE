@@ -40,7 +40,7 @@ class ProfileActivity : ComponentActivity() {
 fun ProfileScreen(userId: String) {
     var isMorningPerson by remember { mutableStateOf(true) }
     var isSmoker by remember { mutableStateOf(false) }
-    var snores by remember { mutableStateOf(true) }
+    var snoreLevel by remember { mutableStateOf(3f) }
     var hygieneLevel by remember { mutableStateOf(3f) }
     var hallType by remember { mutableStateOf("신관") }
     var resultText by remember { mutableStateOf("") }
@@ -78,13 +78,18 @@ fun ProfileScreen(userId: String) {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // 코골이 여부 스위치
+        // 코골이 여부 슬라이더
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text("코골지 않음 (ON) / 코골이 (OFF)")
-            Switch(checked = !snores, onCheckedChange = { snores = !it })
+            Text("코골이 정도: ${snoreLevel.toInt()}")
+            Slider(
+                value = snoreLevel,
+                onValueChange = { snoreLevel = it },
+                valueRange = 1f..5f,
+                steps = 3
+            )
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -144,7 +149,7 @@ fun ProfileScreen(userId: String) {
                     user_id = userId,
                     is_morning_person = isMorningPerson,
                     is_smoker = isSmoker,
-                    snores = snores,
+                    snore_level = snoreLevel.toInt(),
                     hygiene_level = hygieneLevel.toInt(),
                     hall_type = hallType
                 )

@@ -16,18 +16,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 
-
 // MainActivity: 앱의 첫 번째 화면을 담당하는 Activity
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // ① 외부에서 전달된 userId가 있는지 확인
+        // ① 외부에서 전달된 userId/page가 있는지 확인
         val passedUserId = intent.getStringExtra("userId")
+        val defaultPage = intent.getStringExtra("page") ?: "home"
 
         setContent {
             StayKUTheme {
-                // ② rememberSaveable 대신 passedUserId 초기화
                 var loggedInUserId by remember { mutableStateOf(passedUserId) }
                 var isRegistering by remember { mutableStateOf(false) }
 
@@ -35,6 +34,7 @@ class MainActivity : ComponentActivity() {
                     loggedInUserId != null -> {
                         HomeScreen(
                             userId = loggedInUserId!!,
+                            defaultPage = defaultPage,
                             onLogout = { loggedInUserId = null }
                         )
                     }
@@ -119,4 +119,3 @@ fun MainScreenPreview() {
         MainScreen()
     }
 }
-
